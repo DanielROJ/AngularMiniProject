@@ -1,0 +1,66 @@
+<section class="container p-4">
+
+<div>
+    <h1 class="card-header">Consulta y Eliminacion De Empleados</h1>
+</div>
+
+<form class="card-body"  [formGroup]="items"> 
+    <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="search">Buscar Empleado Por Identificacion: </label>
+        <input type="number"   formControlName="idEmpleado" name="search" class="col-sm-7 form-control" autofocus>        
+    </div>
+    <div class="form-group row">
+            <label class="col-sm-5 col-form-label">Tipo Identificacion: </label>
+            <select class="form-control custom-select col-sm-7" formControlName="type" >
+                <option value="" selected>Tipo Identificacion</option>
+                <option *ngFor="let item of tiposID" (click)="value='item'" >{{item}}</option>
+            </select>
+    </div>
+
+    <div class="form-group row">
+        <div class="col">
+                <input (click)="ReadEmpleado(items.value)" type="button" value="Buscar Empleado" class="form-control btn btn-info">
+        </div>
+          <div class="col">
+                <input  type="button" (click)="allEmpleados()" value="Traer Todos Los Empleados" class="form-control btn btn-info">
+          </div>
+
+          <div class="col">
+                <input  type="button" (click)="deleteEmpleado(items.value)" value="Eliminar Empleado" class="form-control btn btn-danger">
+          </div>
+
+    </div>   
+</form>
+
+
+<div class="table-responsive-sm">
+<table class="table table-striped">
+    <thead class="thead-dark">   
+        <tr>
+        <th>Numero Identificacion</th>
+        <th>Tipo Identificacion</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Correo Electronico</th>
+        <th>Salario Mensual COP*</th>
+        <th>Telefono 1</th>
+        <th>Telefono 2</th>
+        <th>Telefono 3</th>
+    </tr>
+</thead>
+ 
+    <tr *ngFor="let it of listEmpleados">
+      <td>{{it.idEmpleado}}</td>
+      <td>{{it.tipoIdentificacion}}</td>
+      <td>{{it.nombres}}</td>
+      <td>{{it.apellidos}}</td>
+      <td>{{it.correoElectronico}}</td>
+      <td>{{it.salarioMensual}}</td>
+      <td>{{it.tel1}}</td>
+      <td>{{it.tel2}}</td>
+      <td>{{it.tel3}}</td>
+    </tr>
+</table>
+</div>
+
+</section>
