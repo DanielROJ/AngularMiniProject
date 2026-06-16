@@ -1,4 +1,4 @@
-# AngularMiniProject
+# Full Stack Angular - Node.js (Express) - PosgreSQL
 
 A modern full-stack employee management application featuring a **CRUD (Create, Read, Update, Delete)** system for user profiles. Built with Angular 20 frontend and Node.js 20+ backend using TypeScript.
 
