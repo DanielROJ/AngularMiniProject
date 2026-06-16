@@ -1,73 +1,198 @@
-<section class="container p-4">
-    <h1 class="card-header">Registro y Actualizacion Empleados</h1>
-    <form class="card-body was-validated" [formGroup]="items">
-
-        <div class="form-group">
-            <label>Numero Identificacion: </label>
-            <input class="form-control " formControlName="idEmp" type="number" placeholder="identificacion" min="0" autofocus required>
-            <small class="form-text text-muted">Este Campo Funciona Para Actualizacion y Creacion de Empleados Segun un
-                ID</small>
-        </div>
-        <div class="row">
-
-            <div class="col">
-                <div class="form-group">
-                    <label>Tipo Identificacion: </label>
-                    <select formControlName="type" class="form-control custom-select" required>
-                        <option value="" selected>Tipo Identificacion</option>
-                        <option *ngFor="let item of tiposID" (click)="value='item'" >{{item}}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Nombres: </label>
-                    <input class="form-control " formControlName="nombres" type="text" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Apellidos: </label>
-                    <input class="form-control" formControlName="apellidos" type="text" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo Electronico : </label>
-                    <input class="form-control" formControlName="correo" type="email" required>
-                </div>
-
-            </div>
-
-            <div class="col">
-                <div class="form-group">
-                    <label>Numero de Telefono 1: </label>
-                    <input class="form-control" formControlName="tel1" min="0" type="tel">
-                </div>
-
-                <div class="form-group">
-                    <label>Numero de Telefono 2: </label>
-                    <input class="form-control"  formControlName="tel2" min="0" type="tel">
-                </div>
-
-                <div class="form-group">
-                    <label>Numero de Telefono 3: </label>
-                    <input class="form-control" formControlName="tel3" min="0" type="tel">
-                </div>
-
-
-                <div class="form-group">
-                    <label>Salario Mensual: </label>
-                    <input class="form-control" min="0" placeholder="COP" formControlName="salario" type="number" required>
-                </div>
-            </div>
-        </div>
-        <div class="form-group container">
-            <div class="col">
-                <input (click)="CrearEmpleado(items)" class="form-control btn  btn-primary mt-4 " type="submit" value="Enviar y Crear">
-            </div>
-
-            <div class="col">
-                <input class="form-control btn btn-info mt-4 "  (click)="ActualizarEmpleado(items)"type="button" value="Enviar y Actualizar">
-            </div>
-
+<section class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white px-4">
+            <h4 class="mb-0 py-2">Registro y Actualización de Empleados</h4>
         </div>
 
-    </form>
+        <div class="card-body p-4">
+            <form [formGroup]="items">
+                <h6 class="text-dark border-bottom pb-2 mb-3">Identificación</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="idEmp">Número de Identificación</label>
+                        <input 
+                            class="form-control" 
+                            id="idEmp"
+                            formControlName="idEmp" 
+                            type="number" 
+                            placeholder="Ej: 12345678"
+                            min="0" 
+                            autofocus
+                            [class.is-invalid]="checkError('idEmp')">
+                        <small class="form-text text-muted">Este campo es necesario para crear o actualizar empleados</small>
+                        @if (checkError('idEmp')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('idEmp') }}
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="type">Tipo de Identificación</label>
+                        <select 
+                            class="form-control" 
+                            id="type"
+                            formControlName="type"
+                            [class.is-invalid]="checkError('type')">
+                            <option value="" selected disabled>Selecciona un tipo...</option>
+                            @for (item of tiposID; track item) {
+                                <option [value]="item">{{ item }}</option>
+                            }
+                        </select>
+                        @if (checkError('type')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('type') }}
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <h6 class="text-dark border-bottom pb-2 mb-3 mt-4">Información Personal</h6>
+                
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="nombres">Nombres</label>
+                        <input 
+                            class="form-control" 
+                            id="nombres"
+                            formControlName="nombres" 
+                            type="text"
+                            placeholder="Ej: Juan Carlos"
+                            [class.is-invalid]="checkError('nombres')">
+                        @if (checkError('nombres')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('nombres') }}
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="apellidos">Apellidos</label>
+                        <input 
+                            class="form-control" 
+                            id="apellidos"
+                            formControlName="apellidos" 
+                            type="text"
+                            placeholder="Ej: García López"
+                            [class.is-invalid]="checkError('apellidos')">
+                        @if (checkError('apellidos')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('apellidos') }}
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <h6 class="text-dark border-bottom pb-2 mb-3 mt-4">Información de Contacto</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="correo">Correo Electrónico</label>
+                        <input 
+                            class="form-control" 
+                            id="correo"
+                            formControlName="correo" 
+                            type="email"
+                            placeholder="Ej: juan@example.com"
+                            [class.is-invalid]="checkError('correo')">
+                        @if (checkError('correo')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('correo') }}
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="tel1">Teléfono Principal</label>
+                        <input 
+                            class="form-control" 
+                            id="tel1"
+                            formControlName="tel1" 
+                            type="tel"
+                            placeholder="Ej: +57 300 123 4567"
+                            [class.is-invalid]="checkError('tel1')">
+                        @if (checkError('tel1')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('tel1') }}
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="tel2">Teléfono Secundario</label>
+                        <input 
+                            class="form-control" 
+                            id="tel2"
+                            formControlName="tel2" 
+                            type="tel"
+                            placeholder="Ej: +57 301 987 6543"
+                            [class.is-invalid]="checkError('tel2')">
+                        @if (checkError('tel2')) {
+                            <div class="invalid-feedback d-block">
+                                {{ getErrorMessage('tel2') }}
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group col-12 col-md-6">
+                        <label for="tel3">Teléfono Terciario (Opcional)</label>
+                        <input 
+                            class="form-control" 
+                            id="tel3"
+                            formControlName="tel3" 
+                            type="tel"
+                            placeholder="Ej: +57 302 456 7890">
+                    </div>
+                </div>
+
+                <h6 class="text-dark border-bottom pb-2 mb-3 mt-4">Información Salarial</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6 mb-0">
+                        <label for="salario">Salario Mensual</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">COP $</span>
+                            </div>
+                            <input 
+                                class="form-control" 
+                                id="salario"
+                                formControlName="salario" 
+                                type="number"
+                                placeholder="0"
+                                min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="text-right">
+                    <button 
+                        type="button"
+                        class="btn btn-outline-secondary mr-2"
+                        (click)="items.reset()">
+                        Limpiar
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn btn-info mr-2"
+                        [disabled]="!items.valid"
+                        (click)="ActualizarEmpleado()">
+                        Actualizar
+                    </button>
+                    <button 
+                        type="button"
+                        class="btn btn-primary"
+                        [disabled]="!items.valid"
+                        (click)="CrearEmpleado()">
+                        Crear Empleado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </section>

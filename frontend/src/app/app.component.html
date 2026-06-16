@@ -1,13 +1,23 @@
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
     <div class="container">
-        <ul class="nav nav-pills">
-            <li class="nav-item active bg-light text-dark" routerLink="UCempleados" >
-                <a class="nav-link text-primary">Registro y Actualizacion Empleados</a>
-            </li>
-            <li class="nav-item active bg-light text-dark" routerLink="RDEmpleados">
-                <a class="nav-link text-primary">Consulta y Elminar Empleados</a>
-            </li>
-        </ul>
-        </div> 
+        <a class="navbar-brand h4 mb-0" routerLink="/">Sistema de Empleados</a>
+
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav nav-pills ml-lg-auto mt-3 mt-lg-0">
+                <li class="nav-item mr-lg-2 mb-2 mb-lg-0">
+                    <a class="nav-link px-3" routerLink="UCempleados" routerLinkActive="active">
+                        Registro y Actualización
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" routerLink="RDEmpleados" routerLinkActive="active">
+                        Consulta y Eliminación
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
+
 <router-outlet></router-outlet>
